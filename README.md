@@ -1,5 +1,9 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+Learning Next.js in this course: [NextJS & OpenAI - 2024 Edition](https://github.com/john-smilga/nextjs-course-openai)
+
+Leaving Readme mostly intact for now, will update it as I figure out what this project is going to be about.
+
 ## Getting Started
 
 First, run the development server:
