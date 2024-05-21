@@ -1,19 +1,18 @@
 "use client"
 // import { useState } from "react/cjs/react.production.min";
-import { useState } from "react";
+// import { useState } from "react";
+import Counter from "@/components/Counter";
 
 
 
 const ClientPage = () => {
-  const [count, setCount] = useState(0);
+  // const [count, setCount] = useState(0);
   return (
     <div>
-      <h1 className="text-6xl font-bold mb-4">{count}</h1>
-      <button className="btn btn-secondary" onClick={() => setCount(count + 1)}>
-        Increment
-      </button>
+      <h1 className="text-6xl mb-4">Client Page</h1>
+      <Counter/>
     </div>
   )
-}
+};
 
-export default ClientPage
+export default ClientPage;
