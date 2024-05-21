@@ -1,5 +1,3 @@
-import React from 'react'
-
 const loading = () => {
   return (
     <div className="text-primary flex place-content-center">
