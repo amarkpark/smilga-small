@@ -1,8 +1,8 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
-
 Learning Next.js in this course: [NextJS & OpenAI - 2024 Edition](https://github.com/john-smilga/nextjs-course-openai)
 
-Leaving Readme mostly intact for now, will update it as I figure out what this project is going to be about.
+I am personally using this as an opportunity to learn and make friends with Codium, both the coding suggestions and the AI test-writing tool. So far I am finding the suggestions to be very good.
+
+[Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
 
