@@ -1,23 +1,26 @@
 import Link from "next/link"
 import React from 'react'
 
-/*
-I need to pass returned data array in to this component
-loop through the array and return a link for each id
-render a card inside the link for each id and pass that 
-object in to the card to extract the rest of the card data
-*/
-const DrinksList = ({id}) => {
-  const linkSegment = `/drinks/${id}`;
+const DrinksList = ({drinks}) => {
   return (
-    <Link
-      href={linkSegment}
-    >
-      Here is the id { id }
-      Should this be an inline card or a DrinkCard component?
-      Could reuse the component on the Details page
-    </Link>
+    <ul className="menu menu-horizontal place-content-center">
+      {drinks.map(drink => {
+        const linkSegment = `/drinks/${drink.idDrink}`;
+        return (
+          <li key={drink.idDrink}>
+            <Link href={linkSegment}>
+            <div className="card card-compact space-around justify-self-center w-96 bg-base-100 shadow-xl">
+              <figure><img src={drink.strDrinkThumb} alt={drink.strDrink} /></figure>
+              <div className="card-body">
+                <h2 className="card-title">{drink.strDrink}</h2>
+              </div>
+            </div>
+            </Link>
+          </li>
+        )
+      })}
+    </ul>
   )
-}
+};
 
 export default DrinksList
