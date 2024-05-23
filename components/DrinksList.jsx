@@ -6,6 +6,8 @@ const DrinksList = ({drinks}) => {
     <ul className="menu menu-horizontal place-content-center">
       {drinks.map(drink => {
         const linkSegment = `/drinks/${drink.idDrink}`;
+        /* I should be able to pass each single drinks' data to the details page
+        to avoid a second database call. How do I do that? */
         return (
           <li key={drink.idDrink}>
             <Link href={linkSegment}>
