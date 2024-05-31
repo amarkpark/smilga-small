@@ -2,12 +2,11 @@ import Link from "next/link"
 
 const links = [
   { label: "About", href: "/about" },
-  { label: "Tasks", href: "/tasks" },
-  { label: "Query", href: "/query" },
   { label: "Client", href: "/client" },
-  { label: "Info", href: "/about/info" },
   { label: "Drinks", href: "/drinks" },
+  { label: "Info", href: "/about/info" },
   { label: "Prisma Example", href: "/prisma-example" },
+  { label: "Tasks", href: "/tasks" },
 ];
 
 const Navbar = () => {
