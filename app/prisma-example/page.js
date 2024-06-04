@@ -19,13 +19,13 @@ import prisma from "@/utils/db";
 //   return allTasks;
 // }
 
-const allTasks = () => {
-  return prisma.task.findMany({
-    orderBy: {
-      createdAt: "desc",
-    },
-  })
-};
+// const allTasks = () => {
+//   return prisma.task.findMany({
+//     orderBy: {
+//       createdAt: "desc",
+//     },
+//   })
+// };
 
 const createTask = async ({newTask}) => {
   "use server"
@@ -38,14 +38,14 @@ const createTask = async ({newTask}) => {
 };
 
 const PrismaExamplePage = async () => {
-  const tasks = await allTasks();
+  // const tasks = await allTasks();
   return (
     <div className="">
       <h1 className="text-6xl">PrismaExamplePage</h1>
       <hr />
       <TaskForm createTask={createTask}></TaskForm>
       <hr />
-      <TaskList tasks={tasks}></TaskList>
+      <TaskList></TaskList>
     </div>
   )
 }
