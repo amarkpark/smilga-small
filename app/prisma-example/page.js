@@ -1,41 +1,51 @@
+import TaskForm from "@/components/TaskForm";
+import TaskList from "@/components/TaskList";
 import prisma from "@/utils/db";
 
-const prismaHandlers = async () => {
-  await prisma.task.create({
-    data: {
-      content: "Wake Up",
-    }
-  })
+// const prismaHandlers = async () => {
 
-  const allTasks = await prisma.task.findMany({
+//   await prisma.task.create({
+//     data: {
+//       content: "New Task",
+//     }
+//   })
+
+//   const allTasks = await prisma.task.findMany({
+//     orderBy: {
+//       createdAt: "desc",
+//     },
+//   });
+
+//   return allTasks;
+// }
+
+const allTasks = () => {
+  return prisma.task.findMany({
     orderBy: {
       createdAt: "desc",
     },
-  });
+  })
+};
 
-  return allTasks;
-}
+const createTask = async ({newTask}) => {
+  "use server"
+  console.log(newTask);
+  await prisma.task.create({
+    data: {
+      content: {newTask},
+    }
+  })
+};
+
 const PrismaExamplePage = async () => {
-  const tasks = await prismaHandlers();
+  const tasks = await allTasks();
   return (
     <div className="">
       <h1 className="text-6xl">PrismaExamplePage</h1>
       <hr />
-      <div className="max-w-6xl mx-auto items-start form-control">
-        {tasks.map((task) => (
-          <label className="cursor-pointer label">
-            <input type="checkbox" checked={task.completed} className="checkbox checkbox-success" />
-            <span className="mx-8 label-text">{task.content}</span>
-          </label>
-        ))}
-      </div>
-      <br />
+      <TaskForm createTask={createTask}></TaskForm>
       <hr />
-      <div className="mockup-code">
-        {tasks.map((task) => (
-          <pre><code>{JSON.stringify(task)}</code></pre>
-        ))}
-      </div>
+      <TaskList tasks={tasks}></TaskList>
     </div>
   )
 }
