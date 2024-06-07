@@ -42,9 +42,7 @@ const PrismaExamplePage = async () => {
   return (
     <div className="">
       <h1 className="text-6xl">PrismaExamplePage</h1>
-      <hr />
-      <TaskForm createTask={createTask}></TaskForm>
-      <hr />
+      <TaskForm className="mt-8 mb-8" createTask={createTask}></TaskForm>
       <TaskList></TaskList>
     </div>
   )
