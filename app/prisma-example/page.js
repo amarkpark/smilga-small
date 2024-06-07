@@ -19,22 +19,39 @@ import prisma from "@/utils/db";
 //   return allTasks;
 // }
 
-// const allTasks = () => {
-//   return prisma.task.findMany({
-//     orderBy: {
-//       createdAt: "desc",
-//     },
-//   })
-// };
+const allTasks = () => {
+  return prisma.task.findMany({
+    orderBy: {
+      createdAt: "desc",
+    },
+  })
+};
+
+const getTask = async () => {
+  const task = await prisma.task.findUnique({
+    where: {
+      id: id,
+    },
+  });
+
+  return task;
+};
 
 const createTask = async ({newTask}) => {
   "use server"
   console.log(newTask);
-  await prisma.task.create({
+  try {
+    const result = await prisma.task.create({
     data: {
       content: {newTask},
     }
-  })
+  });
+
+  return result;
+  } catch (error) {
+    console.error(error);
+    return {error: error.message};
+  }
 };
 
 const PrismaExamplePage = async () => {

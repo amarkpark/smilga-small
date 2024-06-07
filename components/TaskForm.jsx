@@ -1,25 +1,29 @@
-"use client"
 import React from "react";
-// import prisma from "@/utils/db";
+import prisma from "@/utils/db";
+import { revalidatePath } from "next/cache";
 
-// const prismaHandlers = async () => {
+const TaskForm = () => {
+  const createTask = async (formData) => {
+    "use server"
+    const newTask = formData.get("newTask");
+    console.log("newTask", newTask);
 
-//   await prisma.task.create({
-//     data: {
-//       content: "New Task",
-//     }
-//   })
+    try {
+      const result = await prisma.task.create({
+      data: {
+        content: newTask,
+      }
+    });
 
-//   const allTasks = await prisma.task.findMany({
-//     orderBy: {
-//       createdAt: "desc",
-//     },
-//   });
+    return result;
+    } catch (error) {
+      console.error(error);
+      return {error: error.message};
+    } finally {
+      revalidatePath("/tasks");
+    }
+  };
 
-//   return allTasks;
-// }
-
-const TaskForm = ({createTask}) => {
   return (
     <form action={createTask}>
       <div className="max-w-6xl mx-auto items-start form-control mt-8 mb-8">
@@ -28,12 +32,16 @@ const TaskForm = ({createTask}) => {
             <span className="label-text">Task to Add</span>
           </div>
           <div className="join w-full max-w-xs">
-            <input type="text" className="input input-bordered w-full max-w-xs join-item" />
+            <input
+              type="text"
+              id="newTask"
+              name="newTask"
+              className="input input-bordered w-full max-w-xs join-item"
+              required
+            />
             <button className="btn btn-secondary join-item" type="submit">Add Task</button>
           </div>
         </label>
-        {/* <input className="input input-bordered join-item" placeholder="New Task"/>
-        <button className="btn join-item" type="submit">Add Task</button> */}
       </div>
     </form>
   )
