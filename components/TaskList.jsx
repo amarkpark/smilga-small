@@ -1,13 +1,10 @@
 import React from "react"
 import prisma from "@/utils/db";
 import Link from "next/link";
+import { getAllTasks } from "@/utils/actions";
 
 const TaskList = async () => {
-  const tasks = await prisma.task.findMany({
-    orderBy: {
-      createdAt: "desc",
-    },
-  });
+  const tasks = await getAllTasks();
 
   const deleteTask = async ({id}) => {
     "use server"
