@@ -2,26 +2,11 @@ import React from "react"
 import prisma from "@/utils/db";
 import Link from "next/link";
 import { getAllTasks } from "@/utils/actions";
+import DeleteForm from "./DeleteForm";
 
 const TaskList = async () => {
   const tasks = await getAllTasks();
 
-  const deleteTask = async ({id}) => {
-    "use server"
-    console.log("id to delete", id);
-    try {
-      const result = await prisma.task.delete({
-        where: {
-          id: id,
-        },
-    });
-
-    return result;
-    } catch (error) {
-      console.error(error);
-      return {error: error.message};
-    }
-  };
 
   if (tasks.length === 0) {
     return <h2 className="max-w-6xl mx-auto items-start form-control">Please add a task</h2>
@@ -46,13 +31,7 @@ const TaskList = async () => {
             >
               Edit
             </Link>
-            <button
-              id={`deleteTask-${task.id}`}
-              name={`deleteTask-${task.id}`}
-              className="btn btn-link"
-            >
-              Delete
-            </button>
+            <DeleteForm id={task.id} />
           </label>
         ))}
       </div>

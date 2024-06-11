@@ -21,7 +21,6 @@ export const createTask = async (formData) => {
     }
   });
 
-  formData.set("newTask", "");
   console.log(formData);
 
   return result;
@@ -29,7 +28,26 @@ export const createTask = async (formData) => {
     console.error(error);
     return {error: error.message};
   } finally {
-    // formData.delete("newTask");
+    revalidatePath("/tasks");
+  }
+};
+
+export const deleteTask = async (formData) => {
+  const id = formData.get("id");
+  console.log("id to delete", id);
+
+  try {
+    const result = await prisma.task.delete({
+      where: {
+        id: id,
+      },
+  });
+
+  return result;
+  } catch (error) {
+    console.error(error);
+    return {error: error.message};
+  } finally {
     revalidatePath("/tasks");
   }
 };
