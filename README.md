@@ -6,7 +6,13 @@ I am personally using this as an opportunity to learn and make friends with Codi
 
 ## Getting Started
 
-First, run the development server:
+First, run Prisma Server in a distinct terminal
+
+```bash
+npx prisma studio
+```
+
+Once Prisma is UP, run the development server:
 
 ```bash
 npm run dev
