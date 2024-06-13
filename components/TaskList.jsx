@@ -1,8 +1,8 @@
 import React from "react"
-import prisma from "@/utils/db";
 import Link from "next/link";
-import { getAllTasks } from "@/utils/actions";
+import { getAllTasks, updateChecked } from "@/utils/actions";
 import DeleteForm from "./DeleteForm";
+import CompleteTaskForm from "./CompleteTaskForm";
 
 const TaskList = async () => {
   const tasks = await getAllTasks();
@@ -17,11 +17,7 @@ const TaskList = async () => {
       <div className="max-w-6xl mx-auto items-start form-control">
         {tasks.map((task) => (
           <label className="cursor-pointer label" key={task.id}>
-            <input
-              type="checkbox"
-              defaultChecked={task.completed}
-              className="checkbox checkbox-success"
-            />
+            <CompleteTaskForm id={task.id} completed={task.completed} />
             <span className="mx-8 label-text text-xl">{task.content}</span>
             <Link
               href={`/tasks/${task.id}`}

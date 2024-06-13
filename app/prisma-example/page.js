@@ -37,14 +37,30 @@ const getTask = async () => {
   return task;
 };
 
-const createTask = async ({newTask}) => {
+const createTask = async ({taskContent}) => {
   "use server"
-  console.log(newTask);
+  console.log(taskContent);
   try {
     const result = await prisma.task.create({
     data: {
-      content: {newTask},
+      content: {taskContent},
     }
+  });
+
+  return result;
+  } catch (error) {
+    console.error(error);
+    return {error: error.message};
+  }
+};
+const deleteTask = async ({taskContent}) => {
+  "use server"
+  console.log(taskContent);
+  try {
+    const result = await prisma.task.delete({
+      where: {
+        id: id,
+      },
   });
 
   return result;

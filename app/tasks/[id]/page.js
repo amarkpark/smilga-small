@@ -1,5 +1,7 @@
 import React from 'react'
-import prisma from "@/utils/db";
+// import prisma from "@/utils/db";
+
+import TaskForm from "@/components/TaskForm";
 
 const TaskDetail = ({params}) => {
   const {id} = params;
@@ -23,6 +25,7 @@ const TaskDetail = ({params}) => {
         <h2 className="text-6xl">TaskDetail</h2>
         <p>{id}</p>
       </div>
+      <TaskForm className="mt-8 mb-8" id={id}/>
     </div>
   );
 };
