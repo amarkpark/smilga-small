@@ -125,3 +125,52 @@ export const upsertTask = async (formData) => {
     revalidatePath("/tasks");
   }
 };
+
+export const upsertTaskWithDelay = async (formData) => {
+  console.time("upsertDelay");
+  await new Promise (resolve => setTimeout(resolve, 1000));
+  console.timeEnd("upsertDelay");
+
+  const id = formData.get("id");
+  console.log("id to upsert", id);
+  const taskContent = formData.get("taskContent");
+  console.log("task content", taskContent);
+
+  if (id) {
+    try {
+      const result = await prisma.task.update({
+        where: {
+          id: id,
+        },
+        data: {
+          content: taskContent,
+        }
+      });
+  
+      return result;
+    } catch (error) {
+      console.error(error);
+      return {error: error.message};
+    } finally {
+      console.log("got to the Upsert finally");
+      redirect("/tasks");
+    }
+  }
+
+  try {
+    const result = await prisma.task.create({
+    data: {
+      content: taskContent,
+    }
+  });
+
+  console.log(formData);
+
+  return result;
+  } catch (error) {
+    console.error(error);
+    return {error: error.message};
+  } finally {
+    revalidatePath("/tasks");
+  }
+};
