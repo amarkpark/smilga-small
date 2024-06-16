@@ -1,12 +1,15 @@
 "use client"
-// @refresh reset 
-import { upsertTaskWithDelay, getTask } from "@/utils/actions";
-import { useFormStatus } from "react-dom";
+import { upsertTaskWithDelay } from "@/utils/actions";
+import { useFormStatus, useFormState } from "react-dom";
 
-const TaskFormClientState = async ({id}) => {
+const initialState = {
+  status: 100,
+  message: null,
+};
+
+const TaskFormClientState = ({task}) => {
+  const id = task?.id;
   console.log("TaskFormClientState", id);
-
-  const task = id ? await getTask({id}) : null;
   
   const labelText = id ? "Edit Task" : "Add Task";
   const buttonText = id ? "Update Task" : "Add Task";
@@ -22,11 +25,14 @@ const TaskFormClientState = async ({id}) => {
     )
   }
 
+  const [state, formAction] = useFormState(upsertTaskWithDelay, initialState);
+
+  const styleModifier = state.status === 200 ? "success" : "error";
+
   return (
-    <form action={upsertTaskWithDelay}>
+    <form action={formAction}>
       <div className="max-w-6xl mx-auto items-start form-control mt-8 mb-8">
         <input type="hidden" name="id" value={id} />
-        <input type="hidden" name="completed" value={task?.completed || false} />
         <label className=" w-full max-w-xs">
           <div className="label">
             <span className="label-text">{labelText}</span>
@@ -39,10 +45,15 @@ const TaskFormClientState = async ({id}) => {
               name="taskContent"
               required
               type="text"
-            />
+              />
             <SubmitButton />
           </div>
         </label>
+        <p className="font-semibold">
+          {state.status === 200 && <span className="text-success">{state.message}</span>}
+          {state.status === 400 && <span className="text-error">{state.message}</span>}
+          &nbsp;
+        </p>
       </div>
     </form>
   )

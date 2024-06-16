@@ -1,7 +1,9 @@
+import {  getTask } from "@/utils/actions";
 import TaskFormClientState from "@/components/TaskFormClientState";
 
-const TaskDetail = ({params}) => {
+const TaskDetail = async ({params}) => {
   const {id} = params;
+  const task = await getTask({id});
 
   return (
     <div>
@@ -9,7 +11,7 @@ const TaskDetail = ({params}) => {
         <h2 className="text-6xl">TaskDetail</h2>
         <p>{id}</p>
       </div>
-      <TaskFormClientState className="mt-8 mb-8" id={id}/>
+      <TaskFormClientState className="mt-8 mb-8" task={task}/>
     </div>
   );
 };

@@ -126,9 +126,9 @@ export const upsertTask = async (formData) => {
   }
 };
 
-export const upsertTaskWithDelay = async (formData) => {
+export const upsertTaskWithDelay = async (prevState, formData) => {
   console.time("upsertDelay");
-  await new Promise (resolve => setTimeout(resolve, 1000));
+  await new Promise (resolve => setTimeout(resolve, 500));
   console.timeEnd("upsertDelay");
 
   const id = formData.get("id");
@@ -138,7 +138,7 @@ export const upsertTaskWithDelay = async (formData) => {
 
   if (id) {
     try {
-      const result = await prisma.task.update({
+      await prisma.task.update({
         where: {
           id: id,
         },
@@ -147,18 +147,18 @@ export const upsertTaskWithDelay = async (formData) => {
         }
       });
   
-      return result;
+      return { status: 200, message: "success" };
     } catch (error) {
       console.error(error);
-      return {error: error.message};
+      return { status: 400, message: error.message };
     } finally {
-      console.log("got to the Upsert finally");
+      console.log("got to the Upsert Update finally");
       redirect("/tasks");
     }
   }
 
   try {
-    const result = await prisma.task.create({
+    const result = await prisma.taskx.create({
     data: {
       content: taskContent,
     }
@@ -166,11 +166,12 @@ export const upsertTaskWithDelay = async (formData) => {
 
   console.log(formData);
 
-  return result;
+  return { status: 200, message: "success" };
   } catch (error) {
     console.error(error);
-    return {error: error.message};
+    return { status: 400, message: error.message };
   } finally {
+    console.log("got to the Upsert Create finally");
     revalidatePath("/tasks");
   }
 };
