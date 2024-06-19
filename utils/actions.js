@@ -158,7 +158,7 @@ export const upsertTaskWithDelay = async (prevState, formData) => {
   }
 
   try {
-    const result = await prisma.taskx.create({
+    const result = await prisma.task.create({
     data: {
       content: taskContent,
     }
