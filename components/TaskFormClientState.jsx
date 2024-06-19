@@ -27,8 +27,6 @@ const TaskFormClientState = ({task}) => {
 
   const [state, formAction] = useFormState(upsertTaskWithDelay, initialState);
 
-  const styleModifier = state.status === 200 ? "success" : "error";
-
   return (
     <form action={formAction}>
       <div className="max-w-6xl mx-auto items-start form-control mt-8 mb-8">

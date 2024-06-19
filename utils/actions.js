@@ -2,6 +2,7 @@
 import prisma from "@/utils/db";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation"
+import { z } from "zod";
 
 export const getAllTasks = async () => {
   return await prisma.task.findMany({
@@ -127,6 +128,7 @@ export const upsertTask = async (formData) => {
 };
 
 export const upsertTaskWithDelay = async (prevState, formData) => {
+  // Delay allows us to visualize the button states
   console.time("upsertDelay");
   await new Promise (resolve => setTimeout(resolve, 500));
   console.timeEnd("upsertDelay");
@@ -136,8 +138,14 @@ export const upsertTaskWithDelay = async (prevState, formData) => {
   const taskContent = formData.get("taskContent");
   console.log("task content", taskContent);
 
+  const Task = z.object({
+    taskContent: z.string().min(3).max(256),
+  });
+
   if (id) {
+    let canReturnToTaskList = false;
     try {
+      Task.parse({ taskContent });
       await prisma.task.update({
         where: {
           id: id,
@@ -147,18 +155,25 @@ export const upsertTaskWithDelay = async (prevState, formData) => {
         }
       });
   
+      canReturnToTaskList = true;
       return { status: 200, message: "success" };
     } catch (error) {
       console.error(error);
       return { status: 400, message: error.message };
     } finally {
       console.log("got to the Upsert Update finally");
-      redirect("/tasks");
+
+      if (canReturnToTaskList) {
+        // Need to find a way to add a delay to see Success message
+        // OR pass state to redirect so displays in task list page
+        redirect("/tasks"); 
+      }
     }
   }
 
   try {
-    const result = await prisma.task.create({
+    Task.parse({ taskContent });
+    await prisma.task.create({
     data: {
       content: taskContent,
     }
