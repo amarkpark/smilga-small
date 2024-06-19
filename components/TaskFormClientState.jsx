@@ -1,6 +1,8 @@
 "use client"
 import { upsertTaskWithDelay } from "@/utils/actions";
 import { useFormStatus, useFormState } from "react-dom";
+import { useEffect } from "react";
+import { toast } from "react-hot-toast";
 
 const initialState = {
   status: 100,
@@ -27,6 +29,15 @@ const TaskFormClientState = ({task}) => {
 
   const [state, formAction] = useFormState(upsertTaskWithDelay, initialState);
 
+  useEffect(() => {
+    if (state.status === 400) {
+      toast.error(state.message);
+    }
+    if (state.status === 200) {
+      toast.success(state.message);
+    }
+  }, [state]);
+
   return (
     <form action={formAction}>
       <div className="max-w-6xl mx-auto items-start form-control mt-8 mb-8">
@@ -47,11 +58,6 @@ const TaskFormClientState = ({task}) => {
             <SubmitButton />
           </div>
         </label>
-        <p className="font-semibold">
-          {state.status === 200 && <span className="text-success">{state.message}</span>}
-          {state.status === 400 && <span className="text-error">{state.message}</span>}
-          &nbsp;
-        </p>
       </div>
     </form>
   )
