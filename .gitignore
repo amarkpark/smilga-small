@@ -38,3 +38,10 @@ next-env.d.ts
 
 # prisma local DB
 /prisma/dev.db
+
+# adding .env to gitignore as prep for production
+.env*.local
+.env
+
+# prep for deploying to vercel
+.vercel
