@@ -22,7 +22,7 @@ export const getTask = async ({id}) => {
 
 export const createTask = async (formData) => {
   const taskContent = formData.get("taskContent");
-  console.log("new task const", taskContent);
+  // console.log("new task const", taskContent);
 
   try {
     const result = await prisma.task.create({
@@ -31,11 +31,11 @@ export const createTask = async (formData) => {
     }
   });
 
-  console.log(formData);
+  // console.log(formData);
 
   return result;
   } catch (error) {
-    console.error(error);
+    // console.error(error);
     return {error: error.message};
   } finally {
     revalidatePath("/tasks");
@@ -44,7 +44,7 @@ export const createTask = async (formData) => {
 
 export const deleteTask = async (formData) => {
   const id = formData.get("id");
-  console.log("id to delete", id);
+  // console.log("id to delete", id);
 
   try {
     const result = await prisma.task.delete({
@@ -55,7 +55,7 @@ export const deleteTask = async (formData) => {
 
   return result;
   } catch (error) {
-    console.error(error);
+    // console.error(error);
     return {error: error.message};
   } finally {
     revalidatePath("/tasks");
@@ -75,7 +75,7 @@ export const updateChecked = async ({id, checked}) => {
 
     return result;
   } catch (error) {
-    console.error(error);
+    // console.error(error);
     return {error: error.message};
   } finally {
     revalidatePath("/tasks");
@@ -84,9 +84,9 @@ export const updateChecked = async ({id, checked}) => {
 
 export const upsertTask = async (formData) => {
   const id = formData.get("id");
-  console.log("id to upsert", id);
+  // console.log("id to upsert", id);
   const taskContent = formData.get("taskContent");
-  console.log("task content", taskContent);
+  // console.log("task content", taskContent);
 
   if (id) {
     try {
@@ -101,10 +101,10 @@ export const upsertTask = async (formData) => {
   
       return result;
     } catch (error) {
-      console.error(error);
+      // console.error(error);
       return {error: error.message};
     } finally {
-      console.log("got to the Upsert finally");
+      // console.log("got to the Upsert finally");
       redirect("/tasks");
     }
   }
@@ -116,11 +116,11 @@ export const upsertTask = async (formData) => {
     }
   });
 
-  console.log(formData);
+  // console.log(formData);
 
   return result;
   } catch (error) {
-    console.error(error);
+    // console.error(error);
     return {error: error.message};
   } finally {
     revalidatePath("/tasks");
@@ -129,14 +129,14 @@ export const upsertTask = async (formData) => {
 
 export const upsertTaskWithDelay = async (prevState, formData) => {
   // Delay allows us to visualize the button states
-  console.time("upsertDelay");
+  // console.time("upsertDelay");
   await new Promise (resolve => setTimeout(resolve, 500));
-  console.timeEnd("upsertDelay");
+  // console.timeEnd("upsertDelay");
 
   const id = formData.get("id");
-  console.log("id to upsert", id);
+  // console.log("id to upsert", id);
   const taskContent = formData.get("taskContent");
-  console.log("task content", taskContent);
+  // console.log("task content", taskContent);
 
   const Task = z.object({
     taskContent: z.string().min(3).max(256),
@@ -158,10 +158,10 @@ export const upsertTaskWithDelay = async (prevState, formData) => {
       canReturnToTaskList = true;
       return { status: 200, message: "success" };
     } catch (error) {
-      console.error(error);
+      // console.error(error);
       return { status: 400, message: error.message };
     } finally {
-      console.log("got to the Upsert Update finally");
+      // console.log("got to the Upsert Update finally");
 
       if (canReturnToTaskList) {
         // Need to find a way to add a delay to see Success message
@@ -179,14 +179,14 @@ export const upsertTaskWithDelay = async (prevState, formData) => {
     }
   });
 
-  console.log(formData);
+  // console.log(formData);
 
   return { status: 200, message: "success" };
   } catch (error) {
-    console.error(error);
+    // console.error(error);
     return { status: 400, message: error.message };
   } finally {
-    console.log("got to the Upsert Create finally");
+    // console.log("got to the Upsert Create finally");
     revalidatePath("/tasks");
   }
 };

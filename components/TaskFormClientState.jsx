@@ -11,15 +11,15 @@ const initialState = {
 
 const TaskFormClientState = ({task}) => {
   const id = task?.id;
-  console.log("TaskFormClientState", id);
+  // console.log("TaskFormClientState", id);
   
   const labelText = id ? "Edit Task" : "Add Task";
   const buttonText = id ? "Update Task" : "Add Task";
 
   const SubmitButton = () => {
-    console.log("SubmitButton");
+    // console.log("SubmitButton");
     const { pending } = useFormStatus();
-    console.log("pending", pending);
+    // console.log("pending", pending);
     return (
       <button className="btn btn-secondary join-item" type="submit" disabled={pending}>
         {pending ? "Saving..." : buttonText}

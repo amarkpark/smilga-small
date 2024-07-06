@@ -6,7 +6,7 @@ const getDrinks = async () => {
   await new Promise (resolve => setTimeout(resolve, 2000));
   const response = await fetch(drinksUrl);
   if (!response.ok) {
-    console.error(response);
+    // console.error(response);
     throw new Error(
       `Drinks failed to load! ${response.status}: ${response.statusText}`
     );
@@ -17,7 +17,7 @@ const getDrinks = async () => {
 
 const DrinksPage = async () => {
   const data = await getDrinks();
-  console.log(data.drinks);
+  // console.log(data.drinks);
   return (
     <div className="flex flex-col max-w-8xl mx-auto items-center">
       <h1 className="text-8xl ml-4">Drinks</h1>

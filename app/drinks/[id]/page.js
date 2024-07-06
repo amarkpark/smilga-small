@@ -6,21 +6,21 @@ const getDrinkDetail = async (drinkUrl) => {
   const response = await fetch(drinkUrl);
   if (!response.ok) {
     // would this be better wrapped in a try-catch?
-    console.error(response);
+    // console.error(response);
     throw new Error(
       `Drink failed to load! ${response.status}: ${response.statusText}`
       );
     }
   const data = await response.json();
-  console.log(data.drinks[0]);
+  // console.log(data.drinks[0]);
   return data?.drinks[0] || {};
 };
   
 const drinkDetail = async ({params}) => {
   const drinkUrl = url + params.id;
   const drinkObject = await getDrinkDetail(drinkUrl);
-  console.log(drinkObject);
-  console.log(params.id);
+  // console.log(drinkObject);
+  // console.log(params.id);
   return (
     <div className="flex flex-col max-w-xl mx-auto items-center">
       <h1 className="text-3xl mb-4">Your beverage is served...</h1>
